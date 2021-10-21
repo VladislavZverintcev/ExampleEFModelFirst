@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ExampleModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ExampleModelStoreContainer">
+    <EntitySet Name="Marks" EntityType="ExampleModel.Store.Marks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Models" EntityType="ExampleModel.Store.Models" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="MarkModel" Association="ExampleModel.Store.MarkModel">
+      <End Role="Mark" EntitySet="Marks" />
+      <End Role="Model" EntitySet="Models" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Marks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Models">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CarType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Mark_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="MarkModel">
+    <End Role="Mark" Type="ExampleModel.Store.Marks" Multiplicity="1" />
+    <End Role="Model" Type="ExampleModel.Store.Models" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mark">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Model">
+        <PropertyRef Name="Mark_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ExampleModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ExampleModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Marks" EntityType="ExampleModel.Mark" />
+          <EntitySet Name="Models" EntityType="ExampleModel.Model" />
+          <AssociationSet Name="MarkModel" Association="ExampleModel.MarkModel">
+            <End Role="Mark" EntitySet="Marks" />
+            <End Role="Model" EntitySet="Models" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Model" Relationship="ExampleModel.MarkModel" FromRole="Mark" ToRole="Model" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="CarType" Type="String" Nullable="false" />
+          <NavigationProperty Name="Mark" Relationship="ExampleModel.MarkModel" FromRole="Model" ToRole="Mark" />
+        </EntityType>
+        <Association Name="MarkModel">
+          <End Type="ExampleModel.Mark" Role="Mark" Multiplicity="1" />
+          <End Type="ExampleModel.Model" Role="Model" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ExampleModelStoreContainer" CdmEntityContainer="ExampleModelContainer">
+    <EntitySetMapping Name="Marks">
+      <EntityTypeMapping TypeName="IsTypeOf(ExampleModel.Mark)">
+        <MappingFragment StoreEntitySet="Marks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Models">
+      <EntityTypeMapping TypeName="IsTypeOf(ExampleModel.Model)">
+        <MappingFragment StoreEntitySet="Models">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CarType" ColumnName="CarType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MarkModel" TypeName="ExampleModel.MarkModel" StoreEntitySet="Models">
+      <EndProperty Name="Mark">
+        <ScalarProperty Name="Id" ColumnName="Mark_Id" />
+      </EndProperty>
+      <EndProperty Name="Model">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
